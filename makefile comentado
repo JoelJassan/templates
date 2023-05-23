@@ -1,0 +1,41 @@
+#consecuente: antecedentes
+#	comandos (siempre con tabulador, no espacios)
+
+SRC_DIR = ./src		# crea directorio src
+INC_DIR = ./inc		# crea directorio inc
+OUT_DIR = ./build	# crea directorio build
+OBJ_DIR = $(OUT_DIR)/obj	# almacenamiento de los  .o
+BIN_DIR = $(OUT_DIR)/bin	# almacenamiento de los .?(.elf)
+SRC_FILES = $(wildcard $(SRC_DIR)/*.c)	# lista de archivos que hay que compilar (.c dentro de src_dir)
+OBJ_FILES = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC_FILES))
+# lista de archivos '.o' que se generan a partir de los '.c'.
+#	SRC_DIR: busco esto
+#	OBJ_DIR: lo cambio por esto
+#	SRC_FILES: lista de valores que voy a procesar
+
+
+.DEFAULT_GOAL := all	#este hace por defecto, en caso de no especificar
+
+$(OUT_DIR):	#para crear obj_dir no necesito nada (carpeta padre de obj_dir)
+	mkdir $(OUT_DIR)
+
+$(OBJ_DIR):	$(OUT_DIR)	#para crear obj_dir necesito out_dir
+	mkdir $(OBJ_DIR)	
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(OBJ_DIR) #para obtener obj_dir necesito el codigo fuente (src_dir) y la carpeta (obj_dir). Esto tiene que estar en este orden por el $<
+	gcc -c $< -o $@	-I $(INC_DIR)
+#	compilo archivos -c 
+# 	Simbolo menor: nombre del archivo original '.c' del src_dir
+#	dejo archivos -o   
+#	$@ nombre de archivo de destino
+#	-I busca los .h en $(INC_DIR)
+
+
+
+all: $(OBJ_FILES)
+#	echo $(SRC_FILES)
+#	echo $(OBJ_FILES)
+
+clean: $(OUT_DIR) 		#borra todo
+#	rm -r $(OUT_DIR)
+
