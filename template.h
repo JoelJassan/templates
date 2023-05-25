@@ -35,8 +35,8 @@
 
 
 
-#ifndef DIGITAL_H
-#define DIGITAL_H
+#ifndef TEMPLATE_H
+#define TEMPLATE_H
 
 /*---  Includes  ------------------------------------------------------------------------------- */
 
